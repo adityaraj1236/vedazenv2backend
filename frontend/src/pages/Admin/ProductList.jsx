@@ -40,14 +40,17 @@ const ProductList = () => {
 
       const { data } = await createProduct(productData);
 
+      // console.log(data);
+
       if (data.error) {
         toast.error("Product create failed. Try Again.");
       } else {
         toast.success(`${data.name} is created`);
         navigate("/");
       }
-    } catch (error) {
-      console.error(error);
+    } 
+    catch (error) {
+      console.log(error);
       toast.error("Product create failed. Try Again.");
     }
   };
