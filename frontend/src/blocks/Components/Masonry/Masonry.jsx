@@ -9,8 +9,39 @@ import { useTransition, a } from '@react-spring/web';
 
 import './Masonry.scss';
 
-function Masonry({ data }) {
+function Masonry() {
   const [columns, setColumns] = useState(2);
+  const data = [
+    {
+      id: 1,
+      logo: 'https://via.placeholder.com/50',
+      heading: '100% Natural Ingredients',
+      content: 'Sustainably sourced herbs and botanicals, free from harmful chemicals.',
+      height: 500,
+    },
+    {
+      id: 2,
+      logo: 'https://via.placeholder.com/50',
+      heading: 'Holistic Wellness',
+      content: 'Addressing root causes for long-lasting results and overall harmony.',
+      height: 500,
+    },
+    {
+      id: 3,
+      logo: 'https://via.placeholder.com/50',
+      heading: 'Authentic Formulations',
+      content: 'Crafted using authentic Ayurvedic recipes refined with modern research.',
+      height: 500,
+    },
+    {
+      id: 4,
+      logo: 'https://via.placeholder.com/50',
+      heading: 'Eco-Friendly Practices',
+      content: 'Committed to sustainable packaging and environmentally friendly practices.',
+      height: 500,
+    },
+    // Add more items
+  ];
 
   useEffect(() => {
     const updateColumns = () => {
@@ -72,15 +103,56 @@ function Masonry({ data }) {
       {transitions((style, item) => (
         <a.div key={item.id} style={style}>
           <div
+            className="card"
             style={{
               backgroundColor: '#ffffff', // Set background if needed
               width: '100%',
               height: '100%',
-              backgroundImage: `url(${item.image})`,
-              backgroundSize: 'cover',
-              backgroundPosition: 'center',
+              border: '1px solid #ddd',
+              borderRadius: '8px',
+              padding: '16px',
+              boxShadow: '0px 4px 6px rgba(0, 0, 0, 0.1)',
+              display: 'flex',
+              flexDirection: 'column',
+              alignItems: 'center',
             }}
-          />
+          >
+            {/* Logo */}
+            <img
+              src={item.logo}
+              alt="Logo"
+              style={{
+                width: '50px',
+                height: '50px',
+                marginBottom: '8px',
+                objectFit: 'contain',
+              }}
+            />
+
+            {/* Heading */}
+            <h3
+              style={{
+                fontSize: '16px',
+                fontWeight: 'bold',
+                marginBottom: '8px',
+                textAlign: 'center',
+                color: '#333',
+              }}
+            >
+              {item.heading}
+            </h3>
+
+            {/* Content */}
+            <p
+              style={{
+                fontSize: '14px',
+                color: '#666',
+                textAlign: 'center',
+              }}
+            >
+              {item.content}
+            </p>
+          </div>
         </a.div>
       ))}
     </div>

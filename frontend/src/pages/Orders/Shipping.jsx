@@ -9,14 +9,12 @@ import ProgressSteps from "../../components/ProgressSteps";
 
 const Shipping = () => {
   const cart = useSelector((state) => state.cart);
-  const { shippingAddress } = cart;
+  const { shippingAddress, totalPrice } = cart; // Assuming totalPrice is part of the cart state
 
   const [paymentMethod, setPaymentMethod] = useState("PayPal");
   const [address, setAddress] = useState(shippingAddress.address || "");
   const [city, setCity] = useState(shippingAddress.city || "");
-  const [postalCode, setPostalCode] = useState(
-    shippingAddress.postalCode || ""
-  );
+  const [postalCode, setPostalCode] = useState(shippingAddress.postalCode || "");
   const [country, setCountry] = useState(shippingAddress.country || "");
 
   const dispatch = useDispatch();
@@ -30,7 +28,35 @@ const Shipping = () => {
     navigate("/placeorder");
   };
 
-  // Payment
+  // Payment handler
+  const handlePayment = () => {
+    if (window.Razorpay) {
+      const options = {
+        key: "rzp_test_NaXrwOjjMbPbYR", // Your Razorpay key
+        amount: totalPrice * 100, // Total amount in paise (1 INR = 100 paise)
+        currency: "INR", // Currency for the payment
+        name: "Your Company Name", // Your business name
+        description: "Order Payment",
+        image: "https://your-logo-url.com", // Optional logo image
+        handler: function (response) {
+          console.log("Payment Successful", response);
+          // Handle success response here (e.g., save the payment status in your database)
+        },
+        prefill: {
+          name: "Customer Name",
+          email: "customer@example.com",
+          contact: "+919876543210", // Optional contact number
+        },
+        theme: {
+          color: "#F37254", // Your theme color
+        },
+      };
+
+      const rzp1 = new window.Razorpay(options);
+      rzp1.open();
+    }
+  };
+
   useEffect(() => {
     if (!shippingAddress.address) {
       navigate("/shipping");
@@ -99,7 +125,6 @@ const Shipping = () => {
                   checked={paymentMethod === "PayPal"}
                   onChange={(e) => setPaymentMethod(e.target.value)}
                 />
-
                 <span className="ml-2">PayPal or Credit Card</span>
               </label>
             </div>
@@ -112,6 +137,16 @@ const Shipping = () => {
             Continue
           </button>
         </form>
+
+        {/* Razorpay Payment Button */}
+        <div className="mt-6 w-full">
+          <button
+            onClick={handlePayment}
+            className="bg-green-500 text-white py-2 px-4 rounded-full text-lg w-full"
+          >
+            Pay ₹{totalPrice} Now
+          </button>
+        </div>
       </div>
     </div>
   );

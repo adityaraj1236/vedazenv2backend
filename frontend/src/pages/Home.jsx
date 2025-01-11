@@ -5,9 +5,13 @@ import Message from "../components/Message";
 import Header from "../components/Header";
 import Product from "./Products/Product";
 import logo from "./images/vedazen-logo.png";
-import Masonry from "../blocks/Components/Masonry/Masonry";
 import BlurText from "../blocks/TextAnimations/BlurText/BlurText";
 import RollingGallery from "../blocks/Components/RollingGallery/RollingGallery";
+// import Masonry from "../blocks/Components/Masonry/Masonry";
+import ShuffleCard from "../blocks/Components/ShuffleCard/ShuffleCard";
+import AnimatedContent from "../blocks/Animations/AnimatedContent/AnimatedContent";
+import SplitText from "../blocks/TextAnimations/SplitText/SplitText";
+
 const Home = () => {
   const imagesArray = [
     "https://images.pexels.com/photos/414612/pexels-photo-414612.jpeg?auto=compress&cs=tinysrgb&w=600",
@@ -31,7 +35,7 @@ const Home = () => {
         </Message>
       ) : (
         <>
-          <div className="flex flex-col items-center md:flex-row md:justify-between md:items-end">
+          <div className="flex flex-col items-center md:flex-row md:justify-between md:items-end mt-0">
             <Link
               to="/"
               className="mt-10 order-2 md:order-1"
@@ -43,35 +47,35 @@ const Home = () => {
               />
             </Link>
 
+            <div className="flex text-[#F2AE72]  text-lg space-x-4 order-3 md:order-2">
+              
+              <Link to="/shop">Shop</Link>
+              <Link to="/about">About</Link>
+              <Link to="/blog">Blog</Link>
+              <Link to="/contact">Contact</Link>
+            </div>
+
             <Link
               to="/shop"
               className="bg-[#F2AE72] font-bold rounded-full py-2 px-10 mt-5 order-1 md:order-2 md:mr-[18rem]"
             >
 
-              Explore Vedazen
+              Shop Now
             </Link>
           </div>
 
           <div>
-          {/* <Masonry
-          breakpointCols={{
-                default: 4,
-                1100: 3,
-                700: 2,
-                500: 1
-              }}
-              className="my-masonry-grid"
-              columnClassName="my-masonry-grid_column"> */}
-              
-              <div className="flex flex-wrap justify-around items-center">
-            {/* <Masonry data={data.products} /> */}
-              {data.products.map((product) => (
-                <div key={product._id}>
-                  <Product product={product} />
-                </div>
-              ))}
-              </div>
-          {/* </Masonry> */}
+          
+          <div className="flex ml-[50%] my-[28px] text-2xl font-semibold">Our Product Range</div>
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-0 mt-8 place-items-center">
+  {data.products.map((product) => (
+    <div key={product._id}>
+      <Product product={product} />
+    </div>
+  ))}
+</div>
+
+
 
 <BlurText
   text="Vedazen: Revive with Nature's Touch."
@@ -79,9 +83,43 @@ const Home = () => {
   animateBy="words"
   direction="top"
   // onAnimationComplete={handleAnimationComplete}
-  className="text-6xl mb-8 ml-[20%] font-bold text-[#F2AE72]"
+  className="text-6xl mb-8 mt-8 ml-[20%] font-bold text-[#F2AE72]"
 />
         {/* <RollingGallery autoplay={true} pauseOnHover={true} images={imagesArray} /> */}
+        {/* <Masonry/> */}
+        <ShuffleCard/>
+        <div className="flex justify-center items-center w-full h-screen">
+  <AnimatedContent
+    distance={50}
+    direction="horizontal"
+    reverse={false}
+    config={{ tension: 80, friction: 20 }}
+    initialOpacity={0.2}
+    animateOpacity
+    scale={1.1}
+    threshold={0.2}
+  >
+    <div className="text-center  bg-gradient-to-r rounded-lg shadow-lg  text-white max-w-3xl">
+      
+    <SplitText
+  text="Our Philoshphy"
+  className="text-2xl font-semibold text-center"
+  delay={150}
+  animationFrom={{ opacity: 0, transform: 'translate3d(0,50px,0)' }}
+  animationTo={{ opacity: 1, transform: 'translate3d(0,0,0)' }}
+  easing="easeOutCubic"
+  threshold={0.2}
+  rootMargin="-50px"
+/>
+      <p className="text-xl font-medium mb-2">Balance. Harmony. Healing.</p>
+      <p className="text-lg leading-relaxed">
+        At VedaZen, we believe true wellness comes from balancing the three doshas—Vata, Pitta, and Kapha. 
+        Our mission is to empower you with products that help you achieve that balance, so you can lead a healthier, happier life.
+      </p>
+    </div>
+  </AnimatedContent>
+</div>
+
           </div>
         </>
       )}
